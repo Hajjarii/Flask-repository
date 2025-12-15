@@ -1,0 +1,478 @@
+*       {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Topp-bar med klokke */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #222;
+            padding: 10px 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #fff;
+            font-size: 2.5rem;
+            flex: 1;
+            text-align: left;
+        }
+
+        .date-display {
+            flex: 1;
+            text-align: center;
+            color: #fff;
+            font-size: 1.7rem;
+        }
+
+        .time-display {
+            flex: 1;
+            text-align: right;
+            color: #fff;
+            font-size: 1.7rem;
+        }
+
+        /* Container for alle slides */
+        .slideshow-container {
+            position: relative;
+            height: calc(100vh - 70px);
+            overflow: hidden;
+        }
+
+        /* Hver slide */
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            padding: 30px;
+        }
+
+        /* Aktiv slide */
+        .slide.active {
+            opacity: 1;
+        }
+
+        /* Slide tittel */
+        .slide-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Transport side */
+        .transport-content {
+            display: flex;
+            gap: 30px;
+            height: calc(100% - 100px);
+        }
+
+        .transport-column {
+            flex: 1;
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .transport-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .transport-icon {
+            font-size: 40px;
+        }
+
+        .transport-location {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .column-headers {
+            display: flex;
+            padding: 0 10px 15px 10px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .header-avgang {
+            flex: 1;
+        }
+
+        .header-plf {
+            width: 60px;
+            text-align: right;
+        }
+
+        .bus-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .bus-item:last-child {
+            border-bottom: none;
+        }
+
+        .bus-number {
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 22px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .bus-red {
+            background-color: #e31e24;
+        }
+
+        .bus-orange {
+            background-color: #ff8c00;
+        }
+
+        .bus-destination {
+            flex: 1;
+            font-size: 20px;
+        }
+
+        .bus-time {
+            font-weight: bold;
+            font-size: 22px;
+            width: 100px;
+            text-align: right;
+        }
+
+        .bus-platform {
+            font-size: 18px;
+            width: 60px;
+            text-align: right;
+            color: #ccc;
+        }
+
+        /* Været side */
+        .weather-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px; /* Øk høyden etter behov */
+            width: 100%;
+        }
+
+        .elfsight-app-40115626-b48f-46e8-9485-3c242baad904 {
+            width: 90vw !important;   /* 90% av skjermbredden */
+            height: 380px !important; /* Øk høyden etter behov */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .weather-icon {
+            font-size: 150px;
+            margin-bottom: 30px;
+        }
+
+        .weather-temp {
+            font-size: 120px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .weather-location {
+            font-size: 32px;
+            color: #999;
+            margin-bottom: 50px;
+        }
+
+        .weather-details {
+            display: flex;
+            gap: 80px;
+            font-size: 24px;
+        }
+
+        .weather-detail {
+            text-align: center;
+        }
+
+        .weather-detail-label {
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        /* Kalender side */
+        .calendar-content {
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 50px;
+            height: calc(100% - 100px);
+        }
+
+        .calendar-item {
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-left: 8px solid #4CAF50;
+        }
+
+        .calendar-item-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .calendar-item-time {
+            font-size: 24px;
+            color: #999;
+        }
+
+        /* Sikkerhet side */
+        .security-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100% - 100px);
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+        .security-icon {
+            font-size: 120px;
+            margin-bottom: 30px;
+        }
+
+        .security-status {
+            font-size: 48px;
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 50px;
+        }
+
+        .security-details {
+            font-size: 28px;
+            color: #999;
+            text-align: center;
+        }
+
+        .security-details div {
+            margin-bottom: 20px;
+        }
+
+        /* iframe container */
+        .iframe-container {
+            width: 100%;
+            height: 90%;
+            margin-top: 30px;
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Indikator for hvilken side vi er på */
+        .slide-indicators {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #444;
+            transition: background-color 0.3s;
+        }
+
+        .indicator.active {
+            background-color: #4CAF50;
+        }
+
+        .welcome-content {
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            gap: 60px;
+            height: 100%;
+        }
+
+        .welcome-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            min-width: 350px;
+            padding: 40px 0;
+        }
+
+        .welcome-greeting {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .welcome-name {
+            font-size: 2.5rem;
+            color: #fff;
+            font-weight: 300;
+            text-align: right;
+        }
+
+        .welcome-weather {
+            display: flex;
+            align-items: right;
+            justify-content: right;
+            min-width: 400px;
+            max-width: 700px;
+        }
+
+        .settings-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: #fff;
+            z-index: 10;
+        }
+
+        .settings-btn:hover {
+            color: #4CAF50;
+        }
+
+        /* Vis ikke X-knappen som standard */
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #e31e24;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 100;
+        }
+
+        /* Når man hover over kalender-item, vis X-knappen */
+        .calendar-item:hover .delete-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .settings-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            border-radius: 15px;
+        }
+
+        .settings-content {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #4CAF50;
+            min-width: 350px;
+        }
+
+        .settings-content h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        .settings-input {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: #2a2a2a;
+            border: 1px solid #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+
+        .settings-input::placeholder {
+            color: #999;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #45a049;
+        }
+
+        .cancel-btn {
+            background: #666;
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: #555;
+        }
+
+        .calendar-item {
+            position: relative;
+        }

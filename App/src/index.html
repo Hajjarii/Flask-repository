@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hus assistent</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+    <!-- Topp-bar -->
+    <div class="header">
+        <h1>Hus assistent</h1>
+        <div class="date-display" id="date"></div>
+        <div class="time-display" id="time">00:00</div>
+    </div>
+
+    <!-- Slideshow container -->
+    <div class="slideshow-container">
+
+        <!-- Slide 1: Velkommen -->
+        <div class="slide active">
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <h2 id="greeting" class="welcome-greeting"></h2>
+                    <div class="welcome-name">Jonas</div>
+                </div>
+                <!-- Elfsight Weather Widget -->
+                <div class="welcome-weather">
+                    <script src="https://elfsightcdn.com/platform.js" async></script>
+                    <div class="elfsight-app-40115626-b48f-46e8-9485-3c242baad904" data-elfsight-app-lazy></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Transport (nå kun iframe) -->
+        <div class="slide">
+            <h2 class="slide-title">Transport</h2>
+            <div class="iframe-container">
+                <iframe src="https://mon.ruter.no/departures/59.904626-10.821791/N4Igrgzgpgwg9gGzAWwHYBkCGBPOYAuIAXPgE5hQA0IARnJqQCYTEDaojUCOUjAyvgb4AKgEtkUYgAZqAC1GNOGUaigsioAHJ8ASkQFwADgAVuAYyhEArAE4AzDbYhtegIpgcRAIxSAHDakAWjtNQIAJLggAM2xSEGoXIndPH38gkMCAKShSVBpMVXw4UgBzKEIE3SSPbG8-AMCAFlCIhGjY+Ocq5NrUhuasnLyC8uKyiq63Grr-K0CAdl8AQUCADYh8KFQIACsAD4ACUhUSzsSemZs5xYAhNY2t3cPj1FPKqZT66987pZpRBDMQ4AN1EmAOAFkCiUEDkwIwQABdAC+1FQKBoOQA8lEACJQQxCMCkNTEHzUfCifCw4ggG6kbCoA7QVCbOLURiiCCYGiwxjCUgFCCGYr4CFwTjqViI6hbHl84hkChyBRQAWYMwAa3gSDQxCimDaVBAGyMpg1UAAkswnIkDCZzJZbA4kaiOFwePxBKQROJJEQZCB5IotugVKSNJN9EUHRbrDYAExSW3daapKwANkCXgTVgAooFNGoAKcss6pz6+TPZ3MFpaySDlj69PxWOY5-NrTVDJvVSttwIJxqBHSYTkoWRwYVUw3lXsXdNzABiNzsgSxEAQcAOSCi+FkmGBqHnadbcyHgSXxVUNDAJ-7WYTvkv16gt-vLar5+fq27uSR7zRmajrWL4Xg2I0KbNjMdjDhm8yBOgewktsmpwCUzJbEqyAfjBw4rmuG5bjuYB7geR64akdgJoEGZBNkuT5IUYxzoBC5+NRtFBAAaqIhiGOU0JbJRHFwUEwhwNsWwHmUx5saevicVYoQMcMzGlKxUbsYpw7KYE3FqNSogib4uaBHMUI7MUGwUHJWkKQmCFzAZGwIMZ8mVmZw46NgWwHKC4IGKQcAmY5TT6YZbkmbBwSNHMWLcMCEAlJgDAIh5n4xbBzmGcCiCwnZ5wKTFT4vrkb53hlME0Reo7jsgk7ToIsITEVlacReV7le+VVUTVa7oNg3J-tF7YJlm9IFIwPX2e1w4dnWDYsL1ok1p2RYQKWwkomiGLYniBJEiS6jkiAlLUv6IC-j2HJcvKvDqtsIo+uKkpsDKIByryvCKuQxrBmqgpajqKDHkQBpGtQpqxhY1pSlG9rmhYoHgZBKIfcCOQQKIknEAmKqcEsqDiJglKSeoEPQATUB8FSHhk9s+qGtAyJAA"></iframe>
+            </div>
+        </div>
+
+        <!-- Slide 3: Kalender -->
+        <div class="slide">
+            <h2 class="slide-title">Kalender</h2>
+            <button class="settings-btn" id="settingsBtn" title="Innstillinger">&#9881;</button>
+            <div id="calendarView" class="calendar-content">
+                <div class="calendar-item">
+                    <div class="calendar-item-title">Middag</div>
+                    <div class="calendar-item-time">Tirsdag kl.18:00</div>
+                    <button class="delete-btn" onclick="slettKalenderItem(this)">✕</button>
+                </div>
+                <div class="calendar-item">
+                    <div class="calendar-item-title">Møte</div>
+                    <div class="calendar-item-time">Fredag kl.09:00</div>
+                    <button class="delete-btn">✕</button>
+                </div>
+            </div>
+            <div id="settingsView" class="settings-view" style="display:none;">
+                <div class="settings-content">
+                    <h3>Legg til kalender-element</h3>
+                    <input type="text" id="eventTitle" placeholder="Tittel" class="settings-input">
+                    <input type="text" id="eventTime" placeholder="Dag og tid (f.eks. Tirsdag kl.18:00)" class="settings-input">
+                    <button class="add-btn" onclick="leggTilKalenderItem()">Legg til</button>
+                    <button class="cancel-btn" onclick="lukkSettings()">Lukk</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Sikkerhet -->
+        <div class="slide">
+            <h2 class="slide-title">Sikkerhet</h2>
+            <div class="security-content">
+                <div class="security-icon">🛡️</div>
+                <div class="security-status">✓ Alt sikkert</div>
+                <div class="security-details">
+                    <div>🎥 2 Kameraer aktive</div>
+                    <div>🔒 Dør låst</div>
+                    <div>🏠 Alarm av</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indikatorer -->
+        <div class="slide-indicators">
+            <div class="indicator active"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+            <div class="indicator"></div>
+        </div>
+    </div>
+
+    <script src="scripts/app.js"></script>
+</body>
+</html>
+
+
