@@ -2,9 +2,8 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hus assistent</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <title>Husassistent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
 
@@ -91,7 +90,7 @@
         </div>
     </div>
 
-    <script src="scripts/app.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
 
