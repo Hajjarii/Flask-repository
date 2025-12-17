@@ -6,9 +6,9 @@ app.secret_key = 'velg-en-sterk-hemmelig-nøkkel'
 
 DB_CONFIG = {
     "host": "localhost",
-    "user": "din_db_bruker",
-    "password": "ditt_db_passord",
-    "database": "din_db"
+    "user": "Jonas",
+    "password": "123123",
+    "database": "infoskjerm"
 }
 
 def get_db_connection():
@@ -27,30 +27,17 @@ def login():
         conn.close()
         if user and password == user[1]:
             session['user_id'] = user[0]
+            session['username'] = username
             return redirect(url_for('calendar'))
         else:
             flash('Feil brukernavn eller passord.')
-    return render_template('login.html')
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        conn = get_db_connection()
-        cur = conn.cursor()
-        try:
-            cur.execute("INSERT INTO users (username, password_hash, email) VALUES (?, ?, ?)", (username, password, email))
-            conn.commit()
-            flash('Bruker registrert! Logg inn.')
-            return redirect(url_for('login'))
-        except mariadb.IntegrityError:
-            flash('Brukernavn er allerede i bruk.')
-        finally:
-            cur.close()
-            conn.close()
-    return render_template('register.html')
+    return '''
+    <form method="post">
+        <input name="username" placeholder="Brukernavn" required>
+        <input name="password" type="password" placeholder="Passord" required>
+        <button type="submit">Logg inn</button>
+    </form>
+    '''
 
 @app.route('/calendar', methods=['GET', 'POST'])
 def calendar():
@@ -68,7 +55,17 @@ def calendar():
     events = cur.fetchall()
     cur.close()
     conn.close()
-    return render_template('calendar.html', events=events)
+    event_list = ''.join(f"<li>{e[0]}: {e[1]}</li>" for e in events)
+    return f'''
+    <h2>Velkommen, {session['username']}!</h2>
+    <form method="post">
+        <input name="event_date" type="date" required>
+        <input name="event_text" placeholder="Hva skal du gjøre?" required>
+        <button type="submit">Lagre hendelse</button>
+    </form>
+    <ul>{event_list}</ul>
+    <a href="{url_for('logout')}">Logg ut</a>
+    '''
 
 @app.route('/logout')
 def logout():
