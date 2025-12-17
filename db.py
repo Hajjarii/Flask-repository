@@ -6,13 +6,39 @@ app.secret_key = 'velg-en-sterk-hemmelig-nøkkel'
 
 DB_CONFIG = {
     "host": "localhost",
-    "user": "Jonas",
-    "password": "123123",
-    "database": "infoskjerm"
+    "user": "din_db_bruker",
+    "password": "ditt_db_passord",
+    "database": "din_db"
 }
 
 def get_db_connection():
     return mariadb.connect(**DB_CONFIG)
+
+def get_user(username):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, password_hash FROM users WHERE username=?", (username,))
+    user = cur.fetchone()
+    cur.close()
+    conn.close()
+    return user
+
+def add_event(user_id, event_date, event_text):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("INSERT INTO calendar_events (user_id, event_date, event_text) VALUES (?, ?, ?)", (user_id, event_date, event_text))
+    conn.commit()
+    cur.close()
+    conn.close()
+
+def get_events(user_id):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT event_date, event_text FROM calendar_events WHERE user_id=? ORDER BY event_date", (user_id,))
+    events = cur.fetchall()
+    cur.close()
+    conn.close()
+    return events
 
 def isLoggedIn():
     return True
@@ -29,12 +55,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT id, password_hash FROM users WHERE username=?", (username,))
-        user = cur.fetchone()
-        cur.close()
-        conn.close()
+        user = get_user(username)
         if user and password == user[1]:
             session['user_id'] = user[0]
             session['username'] = username
@@ -54,17 +75,11 @@ def calendar():
     if 'user_id' not in session:
         return redirect(url_for('login'))
     user_id = session['user_id']
-    conn = get_db_connection()
-    cur = conn.cursor()
     if request.method == 'POST':
         event_date = request.form['event_date']
         event_text = request.form['event_text']
-        cur.execute("INSERT INTO calendar_events (user_id, event_date, event_text) VALUES (?, ?, ?)", (user_id, event_date, event_text))
-        conn.commit()
-    cur.execute("SELECT event_date, event_text FROM calendar_events WHERE user_id=? ORDER BY event_date", (user_id,))
-    events = cur.fetchall()
-    cur.close()
-    conn.close()
+        add_event(user_id, event_date, event_text)
+    events = get_events(user_id)
     event_list = ''.join(f"<li>{e[0]}: {e[1]}</li>" for e in events)
     return f'''
     <h2>Velkommen, {session['username']}!</h2>
