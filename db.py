@@ -14,7 +14,17 @@ DB_CONFIG = {
 def get_db_connection():
     return mariadb.connect(**DB_CONFIG)
 
-@app.route('/', methods=['GET', 'POST'])
+def isLoggedIn():
+    return True
+
+@app.route('/')
+def index():
+    if isLoggedIn():
+        return render_template('index.html')
+    else:
+        return redirect(url_for("/login"))
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -70,7 +80,7 @@ def calendar():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('/login'))
 
 if __name__ == '__main__':
     app.run(debug=True)
