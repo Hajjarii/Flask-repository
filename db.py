@@ -2,13 +2,13 @@ import mariadb
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 app = Flask(__name__)
-app.secret_key = 'velg-en-sterk-hemmelig-nøkkel'
+app.secret_key = 'Sterk'
 
 DB_CONFIG = {
     "host": "localhost",
-    "user": "din_db_bruker",
-    "password": "ditt_db_passord",
-    "database": "din_db"
+    "user": "Jonas",
+    "password": "123123",
+    "database": "infoskjerm"
 }
 
 def get_db_connection():
