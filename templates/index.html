@@ -43,28 +43,21 @@
         <!-- Slide 3: Kalender -->
         <div class="slide">
             <h2 class="slide-title">Kalender</h2>
-            <button class="settings-btn" id="settingsBtn" title="Innstillinger">&#9881;</button>
-            <div id="calendarView" class="calendar-content">
-                <div class="calendar-item">
-                    <div class="calendar-item-title">Middag</div>
-                    <div class="calendar-item-time">Tirsdag kl.18:00</div>
-                    <button class="delete-btn" onclick="slettKalenderItem(this)">✕</button>
-                </div>
-                <div class="calendar-item">
-                    <div class="calendar-item-title">Møte</div>
-                    <div class="calendar-item-time">Fredag kl.09:00</div>
-                    <button class="delete-btn">✕</button>
-                </div>
-            </div>
-            <div id="settingsView" class="settings-view" style="display:none;">
-                <div class="settings-content">
-                    <h3>Legg til kalender-element</h3>
-                    <input type="text" id="eventTitle" placeholder="Tittel" class="settings-input">
-                    <input type="text" id="eventTime" placeholder="Dag og tid (f.eks. Tirsdag kl.18:00)" class="settings-input">
-                    <button class="add-btn" onclick="leggTilKalenderItem()">Legg til</button>
-                    <button class="cancel-btn" onclick="lukkSettings()">Lukk</button>
-                </div>
-            </div>
+            <form method="post">
+                <input name="title" placeholder="Tittel" required>
+                <input name="event_date" type="date" required>
+                <input name="event_time" type="time">
+                <input name="description" placeholder="Beskrivelse">
+                <button type="submit">Lagre hendelse</button>
+            </form>
+            <ul>
+                {% for e in events %}
+                    <li>
+                        <b>{{e[0]}}</b> - {{e[1]}} {{e[2] if e[2] else ""}}<br>
+                        {{e[3]}}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
 
         <!-- Slide 4: Sikkerhet -->
