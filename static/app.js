@@ -58,46 +58,6 @@ function stopSlideshow() {
     if (slideshowInterval) clearInterval(slideshowInterval);
 }
 
-function åpneSettings() {
-    inSettings = true;
-    document.getElementById('settingsView').style.display = 'flex';
-    document.getElementById('calendarView').style.display = 'none';
-    stopSlideshow();
-}
-
-function lukkSettings() {
-    inSettings = false;
-    document.getElementById('settingsView').style.display = 'none';
-    document.getElementById('calendarView').style.display = 'block';
-    setTimeout(startSlideshow, 10000); // Vent 10 sekunder før slideshow starter igjen
-}
-
-function leggTilKalenderItem() {
-    const title = document.getElementById('eventTitle').value;
-    const time = document.getElementById('eventTime').value;
-    
-    if (title && time) {
-        const calendarView = document.getElementById('calendarView');
-        const newItem = document.createElement('div');
-        newItem.className = 'calendar-item';
-        newItem.innerHTML = `
-            <div class="calendar-item-title">${title}</div>
-            <div class="calendar-item-time">${time}</div>
-            <button class="delete-btn" onclick="slettKalenderItem(this)">✕</button>
-        `;
-        calendarView.appendChild(newItem);
-        
-        document.getElementById('eventTitle').value = '';
-        document.getElementById('eventTime').value = '';
-        lukkSettings();
-    } else {
-        alert('Vennligst fyll inn både tittel og tid');
-    }
-}
-
-function slettKalenderItem(btn) {
-    btn.parentElement.remove();
-}
 
 window.onload = function() {
     oppdaterKlokkeOgDato();
@@ -119,9 +79,3 @@ window.onload = function() {
 
     document.getElementById('settingsBtn').onclick = åpneSettings;
 };
-
-document.getElementById('calendarView').addEventListener('click', function(e) {
-    if (e.target.classList.contains('delete-btn')) {
-        e.target.parentElement.remove();
-    }
-});
