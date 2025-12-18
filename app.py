@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect
 import db
 
 app = Flask(__name__)
-app.secret_key = 'velg-en-sterk-hemmelig-nøkkel'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -17,4 +16,4 @@ def index():
     return render_template('index.html', events=events)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
