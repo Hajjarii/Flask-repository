@@ -43,21 +43,26 @@
         <!-- Slide 3: Kalender -->
         <div class="slide">
             <h2 class="slide-title">Kalender</h2>
-            <form method="post">
-                <input name="title" placeholder="Tittel" required>
-                <input name="event_date" type="date" required>
-                <input name="event_time" type="time">
-                <input name="description" placeholder="Beskrivelse">
-                <button type="submit">Lagre hendelse</button>
-            </form>
-            <ul>
+            <div class="calendar-content">
+                <form method="post" style="display: flex; gap: 10px; margin-bottom: 30px;">
+                    <input name="title" placeholder="Tittel" class="settings-input" required style="flex:2;">
+                    <input name="event_date" type="date" class="settings-input" required style="flex:1;">
+                    <input name="event_time" type="time" class="settings-input" style="flex:1;">
+                    <input name="description" placeholder="Beskrivelse" class="settings-input" style="flex:2;">
+                    <button type="submit" class="add-btn" style="flex:1;">Lagre hendelse</button>
+                </form>
                 {% for e in events %}
-                    <li>
-                        <b>{{e[0]}}</b> - {{e[1]}} {{e[2] if e[2] else ""}}<br>
-                        {{e[3]}}
-                    </li>
+                <div class="calendar-item">
+                    <div class="calendar-item-title">{{ e[0] }}</div>
+                    <div class="calendar-item-time">
+                        {{ e[1] }}{% if e[2] %} kl.{{ e[2]|slice(0,5) }}{% endif %}
+                    </div>
+                    {% if e[3] %}
+                    <div style="color:#ccc; margin-top:10px;">{{ e[3] }}</div>
+                    {% endif %}
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
 
         <!-- Slide 4: Sikkerhet -->
